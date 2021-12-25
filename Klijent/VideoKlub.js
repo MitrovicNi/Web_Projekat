@@ -161,7 +161,7 @@ export class VideoKlub{
         })
     }
         prikaziClana(){
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").innerHTML;
+            var Broj_clanske_karte=document.getElementsByClassName(".unos_clanska_karta").value;
             if(Broj_clanske_karte!=null)
             {
                 this.prikazClanaTabelarno(this.kontejner);
