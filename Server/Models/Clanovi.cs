@@ -23,6 +23,7 @@ namespace Models
         public string Datum_iznajmljivanja_diska { get; set; }
         [MaxLength(15)]
         public string Datum_vracanja_diska { get; set; }
+        [JsonIgnore]
         public Diskovi Diskovi { get; set; }
     }
 }
