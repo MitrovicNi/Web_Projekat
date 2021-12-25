@@ -1,0 +1,15 @@
+.GlavniKontejner{
+    display: flex;
+    flex-direction: row;
+}
+.kontForma{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 200px;
+}
+table,tr,th,td{
+    border: 1px solid black;
+}
+table{
+    border-collapse: collapse;
+}
