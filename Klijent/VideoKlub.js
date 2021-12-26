@@ -1,4 +1,5 @@
 import { Clan } from "./Clan.js";
+import { Film } from "./Film.js";
 
 export class VideoKlub{
     constructor(){
@@ -160,8 +161,36 @@ export class VideoKlub{
             tr.appendChild(th);
         })
     }
+    prikazFilmaTabelarno(host){
+        let prikazFilma=document.createElement("div");
+        prikazFilma.className="PrikazFilma";
+        host.appendChild(prikazFilma);
+
+        var tabela=document.createElement("table");
+        tabela.className="FilmTabela";
+        prikazFilma.appendChild(tabela);
+
+        var tabelahead=document.createElement("thead");
+        tabela.appendChild(tabelahead);
+
+        var tr=document.createElement("tr");
+        tabelahead.appendChild(tr);
+
+        var tabelabody=document.createElement("tbody")
+        tabelabody.className="PodacioFilmu";
+        tabela.appendChild(tabelabody);
+
+        let th;
+        var zag=["Naslov","Reziserovo ime","Reziserovo prezime","Tip","Ime glavnog glumca","Prezime glavnog glumca","Rejting","Godina","Nominacija za nagrade","Dobijene nagrade"];
+        zag.forEach(el=>{
+            th=document.createElement("th");
+            th.innerHTML=el;
+            th.className="zaglavlje";
+            tr.appendChild(th);
+    })
+}
         prikaziClana(){
-            var Broj_clanske_karte=document.getElementsByClassName(".unos_clanska_karta").value;
+            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
             if(Broj_clanske_karte!=null)
             {
                 this.prikazClanaTabelarno(this.kontejner);
@@ -171,10 +200,10 @@ export class VideoKlub{
                     if(s.ok){
                         s.json().then(data=>{
                             var telotabele=document.querySelector(".PodacioClanu");
-                            data.forEach(s=>{
-                                let clan=new Clan(s.broj_clanske_karte,s.ime,s.prezime,s.datum_isteka_clanarine);
+                            
+                                let clan=new Clan(data.broj_clanske_karte,data.ime,data.prezime,data.datum_isteka_clanarine);
                                 clan.crtajClana(telotabele);
-                            })
+                            
                             
                         })
                     }
@@ -182,5 +211,31 @@ export class VideoKlub{
             }
             else
             alert("Nije unet Broj clanske karte");
+        }
+        prikaziFilm(){
+            var Naslov=document.querySelector(".unos_filma_na_disku").value;
+            if(Naslov!=null)
+            {
+                this.prikazFilmaTabelarno(this.kontejner);
+                fetch("https://localhost:5001/Film/Filmovi_naslov/"+Naslov,{
+                    method:"GET"
+                }).then(s=>{
+                    if(s.ok){
+                        s.json().then(data=>{
+                            var telotabelefilma=document.querySelector(".PodacioFilmu");
+                                data.forEach(s=>{
+                                    let film=new Film(s.naslov,s.r_ime,s.r_prezime,s.tip,s.g_ime,s.g_prezime,s.rejting,s.godina,s.nominacija_za_nagrade,s.dobijene_nagrade);
+                                    film.crtajFilm(telotabelefilma);
+                                })
+                                
+                            
+                            
+                        })
+                    }
+                })
+            }
+            else
+            alert("Nije unet naziv filma");
+        
         }
 }

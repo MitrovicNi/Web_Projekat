@@ -16,13 +16,14 @@ namespace Web_Projekat.Controllers
         {
             Context=context;
         }
-        [Route("PreuzmiGlumca/{Ime}/{Prezime}")]
+        [Route("PreuzmiGlumca/{naslov}")]
         [HttpGet]
-        public async Task<ActionResult> PreuzmiGlumca(string Ime, string Prezime)
+        public async Task<ActionResult> PreuzmiGlumca(string naslov)
         {
             try
             {
-                var glumci=Context.Glumci.Where(p =>p.Ime==Ime).Where(p=>p.Prezime==Prezime);
+                var film=Context.Filmovi.Where(p=>p.Naslov==naslov).FirstOrDefault();
+                var glumci=Context.Glumci.Where(p =>p.Film==film);
                 var glumac= await glumci.ToListAsync();
                  return Ok
                 (

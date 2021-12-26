@@ -28,12 +28,12 @@ namespace Web_Projekat.Controllers
                (
                   clan.Select(p =>
                   new
-                  {
-                     ID=p.ID,
-                     Broj_clanske_karte=p.Broj_clanske_karte,
-                     Ime =p.Ime,
-                     Prezime =p.Prezime,
-                     Datum_isteka_clanarine=p.Datum_isteka_clanarine,
+                  {  
+                    ID=p.ID,
+                    Broj_clanske_karte=p.Broj_clanske_karte,
+                    Ime =p.Ime,
+                    Prezime =p.Prezime,
+                    Datum_isteka_clanarine=p.Datum_isteka_clanarine,
                   }).FirstOrDefault()
                );
             }

@@ -1,0 +1,50 @@
+export class Film{
+    constructor(naslov,r_ime,r_prezime,tip,g_ime,g_prezime,rejting,godina,nominacija_za_nagrade,dobijene_nagrade){
+        this.naslov=naslov;
+        this.r_ime=r_ime;
+        this.r_prezime=r_prezime;
+        this.tip=tip;
+        this.g_ime=g_ime;
+        this.g_prezime=g_prezime;
+        this.rejting=rejting;
+        this.godina=godina;
+        this.nominacija_za_nagrade=nominacija_za_nagrade;
+        this.dobijene_nagrade=dobijene_nagrade;
+        this.kontejner=null;
+    }
+    crtajFilm(host){
+        var tr= document.createElement("tr");
+        host.appendChild(tr);
+
+        var el=document.createElement("td");
+        el.innerHTML=this.naslov;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.r_ime;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.r_prezime;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.tip;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.g_ime;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.g_prezime;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.rejting;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.godina;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.nominacija_za_nagrade;
+        tr.appendChild(el);
+        el=document.createElement("td");
+        el.innerHTML=this.dobijene_nagrade;
+        tr.appendChild(el);
+    }
+}

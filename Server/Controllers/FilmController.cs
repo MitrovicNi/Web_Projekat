@@ -42,11 +42,11 @@ namespace Web_Projekat.Controllers
                            prezime= q.Prezime
                        }),
                        tip=p.Tip,
-                       glumci =p.Glumci.Select(k =>
+                       glumci =p.Glumci.Select(q =>
                        new 
                        {
-                           ime_glumca=k.Ime,
-                           prezime_glumca=k.Prezime
+                           ime_glumca=q.Ime,
+                           prezime_glumca=q.Prezime
                        }),
                        rejting=p.Rejting,
                        godina=p.Godina,
