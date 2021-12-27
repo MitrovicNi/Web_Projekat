@@ -11,12 +11,15 @@ export class Disk{
         this.kontejner.className = "lok";
         var lab1=document.createElement("label");
         lab1.innerHTML="Film na disku:"+this.film_na_disku;
+        lab1.className="lab";
         lab1.appendChild(this.kontejner);
         var lab2=document.createElement("label");
         lab2.innerHTML="Datum pozajmljivanja:"+this.datum_pozajmljivanja;
+        lab2.className="lab";
         lab2.appendChild(this.kontejner);
         var lab3=document.createElement("label");
         lab3.innerHTML="Datum vracanja:"+this.datum_vracanja;
+        lab3.className="lab";
         lab3.appendChild(this.kontejner);
         host.appendChild(this.kontejner);
     }

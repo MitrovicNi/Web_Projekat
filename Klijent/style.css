@@ -14,3 +14,13 @@ table,tr,th,td{
 table{
     border-collapse: collapse;
 }
+.lok{
+    border: 1px solid black;
+    flex: 1 1 10px;
+    margin: 5px;
+    background-color: silver;
+}
+.lab{
+    display: flex;
+    flex-direction: column;
+}
