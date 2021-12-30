@@ -1,11 +1,7 @@
 export class Film{
-    constructor(naslov,r_ime,r_prezime,tip,g_ime,g_prezime,rejting,godina,nominacija_za_nagrade,dobijene_nagrade){
+    constructor(naslov,tip,rejting,godina,nominacija_za_nagrade,dobijene_nagrade){
         this.naslov=naslov;
-        this.r_ime=r_ime;
-        this.r_prezime=r_prezime;
         this.tip=tip;
-        this.g_ime=g_ime;
-        this.g_prezime=g_prezime;
         this.rejting=rejting;
         this.godina=godina;
         this.nominacija_za_nagrade=nominacija_za_nagrade;
@@ -20,19 +16,7 @@ export class Film{
         el.innerHTML=this.naslov;
         tr.appendChild(el);
         el=document.createElement("td");
-        el.innerHTML=this.r_ime;
-        tr.appendChild(el);
-        el=document.createElement("td");
-        el.innerHTML=this.r_prezime;
-        tr.appendChild(el);
-        el=document.createElement("td");
         el.innerHTML=this.tip;
-        tr.appendChild(el);
-        el=document.createElement("td");
-        el.innerHTML=this.g_ime;
-        tr.appendChild(el);
-        el=document.createElement("td");
-        el.innerHTML=this.g_prezime;
         tr.appendChild(el);
         el=document.createElement("td");
         el.innerHTML=this.rejting;
