@@ -134,6 +134,13 @@ export class VideoKlub{
         }
         kontForma.appendChild(dugme6);
 
+        let dugme11 = document.createElement("button");
+        dugme11.innerHTML="Prikazi broj diskova sa datim filmom";
+        dugme11.onclick = (ev)=>{
+            this.brojDiskova();
+        }
+        kontForma.appendChild(dugme11);
+
         let dugme10 = document.createElement("button");
         dugme10.innerHTML="Prikazi diskove koje je clan pozajmio";
         dugme10.onclick = (ev)=>{
@@ -429,7 +436,7 @@ prikazDiskovaTabelarno(host){
         }
         prikaziPozajmljeneDiskove(){
             var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
-            if(Broj_clanske_karte!=null)
+            if(Broj_clanske_karte!=null || Broj_clanske_karte!="" || Broj_clanske_karte!=undefined)
             {
                 this.prikazDiskovaTabelarno(this.kontejner);
                 fetch("https://localhost:5001/Clan/VratiDiskovePozajmljene/"+Broj_clanske_karte,{
@@ -440,13 +447,11 @@ prikazDiskovaTabelarno(host){
                             
                             var telotabelediska=document.querySelector(".PodacioDisku");
                            data.forEach(s=>{
-                               
-                                             let disk=new Disk(s.film_na_disku,s.datum_pozajmljivanja,s.datum_vracanja);
-                                             disk.crtajDisk(telotabelediska);
-                               
+                            let disk=new Disk(s.film,s.datum_iznajmljivanja_diska,s.datum_vracanja_diska);
+                           disk.crtajDisk(telotabelediska);
                                
                            })
-                               
+                           
                             
                             
                         })
@@ -464,4 +469,67 @@ prikazDiskovaTabelarno(host){
         let a=document.querySelector(".PrikazDiska");
         a.appendChild(dugme);
         }
+        pozajmiDisk(){
+            var Film=document.querySelector(".unos_filma_na_disku").value;
+            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Datum_iznajmljivanja_diska=document.querySelector(".unos_datuma_izdavanja_diska").value;
+            var Datum_vracanja_diska=document.querySelector(".unos_datuma_vracanja_diska").value;
+            if(Film==null || Film=="" || Film==undefined)
+            alert("Nije unet film koji je na disku");
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet Broj clanske karte");
+            if(Datum_iznajmljivanja_diska==null || Datum_iznajmljivanja_diska=="" || Datum_iznajmljivanja_diska==undefined)
+            alert("Nije unet datum iznajmljivanja diska");
+            if(Datum_vracanja_diska==null || Datum_vracanja_diska=="" || Datum_vracanja_diska==undefined)
+            alert("Nije unet datum vracanja diska");
+            fetch("https://localhost:5001/Disk/Pozajmidisk/"+Film+"/"+Broj_clanske_karte+"/"+Datum_iznajmljivanja_diska+"/"+Datum_vracanja_diska,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+               
+    
+            }).then(s=>{
+                if(s.ok){
+                      alert("Clan je uspesno pozajmio disk");
+                }
+                else alert("Dodeljivanje diska nije uspelo");
+            })
+        }
+        vratiDisk(){
+            var Film=document.querySelector(".unos_filma_na_disku").value;
+            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            if(Film==null || Film=="" || Film==undefined)
+            alert("Nije unet film koji je na disku");
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet Broj clanske karte");
+            fetch("https://localhost:5001/Disk/Vratidisk/"+Film+"/"+Broj_clanske_karte,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+               
+    
+            }).then(s=>{
+                if(s.ok){
+                      alert("Clan je uspesno vratio disk");
+                }
+                else alert("Vracanje diska nije uspelo");
+            })
+        }
+        dodajClana(){
+
+        }
+        promeniClana(){
+
+        }
+        izbrisiClana(){
+
+        }
+        brojDiskova(){
+            
+        }
+
 }
