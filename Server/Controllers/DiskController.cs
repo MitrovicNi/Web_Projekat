@@ -16,7 +16,7 @@ namespace Web_Projekat.Controllers
         {
             Context=context;
         }
-        [Route("PreuzmiDisk/{film}")]
+        [Route("PreuzmiBrojDiskova/{film}")]
         [HttpGet]
         public async Task<ActionResult> PreuzmiDisk(string film)
         {
@@ -29,10 +29,8 @@ namespace Web_Projekat.Controllers
                     disk.Select(p =>
                     new 
                     {
-                        ID=p.ID,
-                        Film_na_disku=p.Film_na_disku,
                         Broj_diskova=p.Broj_diskova,
-                    }).ToList()
+                    }).FirstOrDefault()
                 );
             }
             catch (Exception e)

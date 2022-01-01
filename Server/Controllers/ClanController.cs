@@ -22,7 +22,7 @@ namespace Web_Projekat.Controllers
         {
             try
             {
-               var clanovi =Context.Clanovi.Where(p =>p.Broj_clanske_karte==broj_clanske_karte);
+               var clanovi =Context.Clanovi.Where(p =>p.Broj_clanske_karte==broj_clanske_karte).Where(p=>p.Diskovi==null);
                var clan= await clanovi.ToListAsync();
                return Ok
                (
@@ -34,7 +34,7 @@ namespace Web_Projekat.Controllers
                     Ime =p.Ime,
                     Prezime =p.Prezime,
                     Datum_isteka_clanarine=p.Datum_isteka_clanarine,
-                  }).FirstOrDefault()
+                  }).LastOrDefault()
                );
             }
             catch(Exception e)
@@ -70,7 +70,9 @@ namespace Web_Projekat.Controllers
         [HttpPost]
         public async Task<ActionResult> DodatiClana([FromBody] Clanovi clan)
         {
-            
+            var c=Context.Clanovi.Where(p=>p.Broj_clanske_karte==clan.Broj_clanske_karte).FirstOrDefault();
+            if(c.Broj_clanske_karte==clan.Broj_clanske_karte)
+            return BadRequest("Već postoji član sa tom članskom kartom");
             if(clan.Broj_clanske_karte<1 || clan.Broj_clanske_karte>2000)
             {
                 return BadRequest("Pogrešan broj clanske karte!");
@@ -102,6 +104,13 @@ namespace Web_Projekat.Controllers
         [HttpPut]
         public async Task<ActionResult> PromenitiClana([FromBody] Clanovi clan)
         {
+            var c=Context.Clanovi.Where(p=>p.Broj_clanske_karte==clan.Broj_clanske_karte).FirstOrDefault();
+            if(clan.Ime==null)
+            clan.Ime=c.Ime;
+            if(clan.Prezime==null)
+            clan.Prezime=c.Prezime;
+            if(clan.Datum_isteka_clanarine==null)
+            clan.Datum_isteka_clanarine=c.Datum_isteka_clanarine;
             if(clan.Broj_clanske_karte<1 || clan.Broj_clanske_karte>2000)
             {
                 return BadRequest("Pogrešan broj clanske karte!");
@@ -129,18 +138,18 @@ namespace Web_Projekat.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [Route("IzbrisatiClana/{id}")]
+        [Route("IzbrisatiClana/{broj_clanske_karte}")]
         [HttpDelete]
-        public async Task<ActionResult> IzbrisatiClana(int id)
+        public async Task<ActionResult> IzbrisatiClana(int broj_clanske_karte)
         {
-            if (id <= 0)
+            var clan=Context.Clanovi.Where(p=>p.Broj_clanske_karte==broj_clanske_karte).FirstOrDefault();
+            if (clan==null)
             {
-                return BadRequest("Pogrešan ID!");
+                return BadRequest("Ne postoji član sa tim brojem članske karte!");
             }
             try
             {
-                var clan = await Context.Clanovi.FindAsync(id);
-                int b = clan.Broj_clanske_karte;
+                int b=clan.Broj_clanske_karte;
                 Context.Clanovi.Remove(clan);
                 await Context.SaveChangesAsync();
                 return Ok($"Uspešno izbrisan član sa brojem indeksa: {b}");

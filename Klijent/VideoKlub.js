@@ -29,7 +29,7 @@ export class VideoKlub{
         kontForma.appendChild(elLabela);
 
         elLabela = document.createElement("label");
-        elLabela.innerHTML="Broj clanske karte";
+        elLabela.innerHTML="Broj članske karte";
         kontForma.appendChild(elLabela);
         
         let tb= document.createElement("input");
@@ -62,28 +62,28 @@ export class VideoKlub{
         kontForma.appendChild(tb);
 
         let dugme1 = document.createElement("button");
-        dugme1.innerHTML="Dodaj clana";
+        dugme1.innerHTML="Dodaj člana";
         dugme1.onclick = (ev)=>{
             this.dodajClana();
         }
         kontForma.appendChild(dugme1);
 
         let dugme2 = document.createElement("button");
-        dugme2.innerHTML="Promeni clana";
+        dugme2.innerHTML="Promeni člana";
         dugme2.onclick = (ev)=>{
             this.promeniClana();
         }
         kontForma.appendChild(dugme2);
 
         let dugme3 = document.createElement("button");
-        dugme3.innerHTML="Izbrisi clana";
+        dugme3.innerHTML="Izbriši člana";
         dugme3.onclick = (ev)=>{
             this.izbrisiClana();
         }
         kontForma.appendChild(dugme3);
 
         let dugme4 = document.createElement("button");
-        dugme4.innerHTML="Prikazi clana";
+        dugme4.innerHTML="Prikaži člana";
         dugme4.onclick = (ev)=>{
             this.prikaziClana();
         }
@@ -111,7 +111,7 @@ export class VideoKlub{
         kontForma.appendChild(tb);
 
         elLabela = document.createElement("label");
-        elLabela.innerHTML="Datum vracanja diska";
+        elLabela.innerHTML="Datum vraćanja diska";
         tb.type="date";
         kontForma.appendChild(elLabela);
         
@@ -135,35 +135,35 @@ export class VideoKlub{
         kontForma.appendChild(dugme6);
 
         let dugme11 = document.createElement("button");
-        dugme11.innerHTML="Prikazi broj diskova sa datim filmom";
+        dugme11.innerHTML="Prikaži broj diskova sa datim filmom";
         dugme11.onclick = (ev)=>{
             this.brojDiskova();
         }
         kontForma.appendChild(dugme11);
 
         let dugme10 = document.createElement("button");
-        dugme10.innerHTML="Prikazi diskove koje je clan pozajmio";
+        dugme10.innerHTML="Prikaži diskove koje je član pozajmio";
         dugme10.onclick = (ev)=>{
             this.prikaziPozajmljeneDiskove();
         }
         kontForma.appendChild(dugme10);
 
         let dugme7 = document.createElement("button");
-        dugme7.innerHTML="Prikazi podatke o filmu";
+        dugme7.innerHTML="Prikaži podatke o filmu";
         dugme7.onclick = (ev)=>{
             this.prikaziFilm();
         }
         kontForma.appendChild(dugme7);
 
         let dugme8 = document.createElement("button");
-        dugme8.innerHTML="Prikazi podatke o reziseru";
+        dugme8.innerHTML="Prikaži podatke o režiseru";
         dugme8.onclick = (ev)=>{
             this.prikaziRezisera();
         }
         kontForma.appendChild(dugme8);
 
         let dugme9 = document.createElement("button");
-        dugme9.innerHTML="Prikazi podatke o glumcu";
+        dugme9.innerHTML="Prikaži podatke o glumcu";
         dugme9.onclick = (ev)=>{
             this.prikaziGlumca();
         }
@@ -244,7 +244,7 @@ prikazReziseraTabelarno(host){
     tabela.appendChild(tabelabody);
 
     let th;
-    var zag=["Ime","Prezime","Datum rodjenja","Mesto rodjenja"];
+    var zag=["Ime","Prezime","Datum rođenja","Mesto rođenja"];
     zag.forEach(el=>{
         th=document.createElement("th");
         th.innerHTML=el;
@@ -271,7 +271,7 @@ prikazGlumcaTabelarno(host){
     tabela.appendChild(tabelabody);
 
     let th;
-    var zag=["Ime","Prezime","Datum rodjenja","Mesto rodjenja"];
+    var zag=["Ime","Prezime","Datum rođenja","Mesto rođenja"];
     zag.forEach(el=>{
         th=document.createElement("th");
         th.innerHTML=el;
@@ -298,7 +298,7 @@ prikazDiskovaTabelarno(host){
     tabela.appendChild(tabelabody);
 
     let th;
-    var zag=["Film na disku","Datum pozajmljivanja","Datum varacanja"];
+    var zag=["Film na disku","Datum pozajmljivanja","Datum vraćanja"];
     zag.forEach(el=>{
         th=document.createElement("th");
         th.innerHTML=el;
@@ -307,8 +307,8 @@ prikazDiskovaTabelarno(host){
 }
         prikaziClana(){
             var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
-            if(Broj_clanske_karte!=null)
-            {
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet broj članske karte");
                 this.prikazClanaTabelarno(this.kontejner);
                 fetch("https://localhost:5001/Clan/PreuzmiClana/"+Broj_clanske_karte,{
                     method:"GET"
@@ -323,10 +323,10 @@ prikazDiskovaTabelarno(host){
                             
                         })
                     }
+                    else alert("Greška");
                 })
-            }
-            else
-            alert("Nije unet Broj clanske karte");
+            
+            
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
@@ -337,11 +337,11 @@ prikazDiskovaTabelarno(host){
         a.appendChild(dugme);
         }
         prikaziFilm(){
-            var Naslov=document.querySelector(".unos_filma_na_disku").value;
-            if(Naslov!=null)
-            {
+            var F=document.querySelector(".unos_filma_na_disku").value;
+            if(F==null || F=="" || F==undefined)
+            alert("Nije unet film koji je na disku");
                 this.prikazFilmaTabelarno(this.kontejner);
-                fetch("https://localhost:5001/Film/Filmovi_naslov/"+Naslov,{
+                fetch("https://localhost:5001/Film/Filmovi_naslov/"+F,{
                     method:"GET"
                 }).then(s=>{
                     if(s.ok){
@@ -355,11 +355,10 @@ prikazDiskovaTabelarno(host){
                                 
                             })
                     }
+                    else alert("Greška");
                 })
                 
-            }
-            else
-            alert("Nije unet naziv filma");
+            
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
@@ -371,11 +370,11 @@ prikazDiskovaTabelarno(host){
         
         }
         prikaziRezisera(){
-            var Naslov=document.querySelector(".unos_filma_na_disku").value;
-            if(Naslov!=null)
-            {
+            var Film=document.querySelector(".unos_filma_na_disku").value;
+            if(Film==null || Film=="" || Film==undefined)
+            alert("Nije unet film koji je na disku");
                 this.prikazReziseraTabelarno(this.kontejner);
-                fetch("https://localhost:5001/Reziser/PreuzmiRezisera/"+Naslov,{
+                fetch("https://localhost:5001/Reziser/PreuzmiRezisera/"+Film,{
                     method:"GET"
                 }).then(s=>{
                     if(s.ok){
@@ -387,11 +386,10 @@ prikazDiskovaTabelarno(host){
                                 })
                             })
                     }
+                    else alert("Greška");
                 })
                 
-            }
-            else
-            alert("Nije unet naziv filma");
+            
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
@@ -403,11 +401,11 @@ prikazDiskovaTabelarno(host){
         
         }
         prikaziGlumca(){
-            var Naslov=document.querySelector(".unos_filma_na_disku").value;
-            if(Naslov!=null)
-            {
+            var Film=document.querySelector(".unos_filma_na_disku").value;
+            if(Film==null || Film=="" || Film==undefined)
+            alert("Nije unet film koji je na disku");
                 this.prikazGlumcaTabelarno(this.kontejner);
-                fetch("https://localhost:5001/Glumac/PreuzmiGlumca/"+Naslov,{
+                fetch("https://localhost:5001/Glumac/PreuzmiGlumca/"+Film,{
                     method:"GET"
                 }).then(s=>{
                     if(s.ok){
@@ -419,11 +417,10 @@ prikazDiskovaTabelarno(host){
                                 })
                             })
                     }
+                    else alert("Greška");
                 })
                 
-            }
-            else
-            alert("Nije unet naziv filma");
+            
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
@@ -436,8 +433,8 @@ prikazDiskovaTabelarno(host){
         }
         prikaziPozajmljeneDiskove(){
             var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
-            if(Broj_clanske_karte!=null || Broj_clanske_karte!="" || Broj_clanske_karte!=undefined)
-            {
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet broj članske karte");
                 this.prikazDiskovaTabelarno(this.kontejner);
                 fetch("https://localhost:5001/Clan/VratiDiskovePozajmljene/"+Broj_clanske_karte,{
                     method:"GET"
@@ -456,10 +453,9 @@ prikazDiskovaTabelarno(host){
                             
                         })
                     }
+                    else alert("Greška");
                 })
-            }
-            else
-            alert("Nije unet Broj clanske karte");
+            
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
@@ -477,11 +473,11 @@ prikazDiskovaTabelarno(host){
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
-            alert("Nije unet Broj clanske karte");
+            alert("Nije unet broj članske karte");
             if(Datum_iznajmljivanja_diska==null || Datum_iznajmljivanja_diska=="" || Datum_iznajmljivanja_diska==undefined)
             alert("Nije unet datum iznajmljivanja diska");
             if(Datum_vracanja_diska==null || Datum_vracanja_diska=="" || Datum_vracanja_diska==undefined)
-            alert("Nije unet datum vracanja diska");
+            alert("Nije unet datum vraćanja diska");
             fetch("https://localhost:5001/Disk/Pozajmidisk/"+Film+"/"+Broj_clanske_karte+"/"+Datum_iznajmljivanja_diska+"/"+Datum_vracanja_diska,
             {
                 method:"PUT",
@@ -492,7 +488,7 @@ prikazDiskovaTabelarno(host){
     
             }).then(s=>{
                 if(s.ok){
-                      alert("Clan je uspesno pozajmio disk");
+                      alert("Član je uspešno pozajmio disk");
                 }
                 else alert("Dodeljivanje diska nije uspelo");
             })
@@ -503,7 +499,7 @@ prikazDiskovaTabelarno(host){
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
-            alert("Nije unet Broj clanske karte");
+            alert("Nije unet broj članske karte");
             fetch("https://localhost:5001/Disk/Vratidisk/"+Film+"/"+Broj_clanske_karte,
             {
                 method:"PUT",
@@ -514,22 +510,97 @@ prikazDiskovaTabelarno(host){
     
             }).then(s=>{
                 if(s.ok){
-                      alert("Clan je uspesno vratio disk");
+                      alert("Član je uspešno vratio disk");
                 }
-                else alert("Vracanje diska nije uspelo");
+                else alert("Vraćanje diska nije uspelo");
             })
         }
         dodajClana(){
-
+            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Ime=document.querySelector(".unos_ime").value;
+            var Prezime=document.querySelector(".unos_prezime").value;
+            var Datum_isteka_clanarine=document.querySelector(".unos_datuma_isteka_clanarine").value;
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet Broj članske karte");
+            if(Ime==null || Ime=="" || Ime==undefined)
+            alert("Nije uneto ime člana");
+            if(Prezime==null || Prezime=="" || Prezime==undefined)
+            alert("Nije uneto prezime člana");
+            if(Datum_isteka_clanarine==null || Datum_isteka_clanarine=="" || Datum_isteka_clanarine==undefined)
+            alert("Nije unet datum isteka članarine");
+            var clan=new Clan(Broj_clanske_karte,Ime,Prezime,Datum_isteka_clanarine);
+            fetch("https://localhost:5001/Clan/DodatiClana",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(clan)
+    
+            }).then(s=>{
+                if(s.ok){
+                      this.prikaziClana();
+                }
+                else alert("Greška");
+            })
         }
         promeniClana(){
-
+            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Ime=document.querySelector(".unos_ime").value;
+            var Prezime=document.querySelector(".unos_prezime").value;
+            var Datum_isteka_clanarine=document.querySelector(".unos_datuma_isteka_clanarine").value;
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet broj članske karte");
+            var clan=new Clan(Broj_clanske_karte,Ime,Prezime,Datum_isteka_clanarine);
+            fetch("https://localhost:5001/Clan/PromenaClana",
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(clan)
+    
+            }).then(s=>{
+                if(s.ok){
+                    this.izbrisiClana();
+                    this.prikaziClana();
+                }
+                else alert("Greška");
+            })
         }
         izbrisiClana(){
-
+            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
+            alert("Nije unet broj članske karte");
+            fetch("https://localhost:5001/Clan/IzbrisatiClana/"+Broj_clanske_karte,
+            {
+                method:"DELETE",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                
+    
+            }).then(s=>{
+                if(s.ok){
+                     alert("Baza podataka je ušpešno ažurirana")
+                }
+                else alert("Greška");
+            })
         }
         brojDiskova(){
-            
+            var Film=document.querySelector(".unos_filma_na_disku").value;
+            if(Film==null || Film=="" || Film==undefined)
+            alert("Nije unet film koji je na disku");
+            fetch("https://localhost:5001/Disk/PreuzmiBrojDiskova/"+Film,{
+                    method:"GET"
+                }).then(s=>{
+                    if(s.ok){
+                        s.json().then(data=>{
+                              alert("Broj diskova sa ovim filmom je: "+data.broj_diskova);
+                            })
+                    }
+                    else alert("Greška");
+                })
         }
 
 }
