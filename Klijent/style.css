@@ -2,6 +2,7 @@
     
     display: flex;
     flex-direction: row;
+    justify-content:space-between;
 }
 .kontForma{
     
@@ -15,4 +16,24 @@ table,tr,th,td{
 }
 table{
     border-collapse: collapse;
+}
+ .PrikazBroja{
+    display: flex;
+    background-color: darkred;
+    color: darkslateblue;
+    font-size: 8cm;
+    width: 8cm;
+    height: 8cm;
+    flex-shrink: 1;
+    justify-content:center;
+    align-items:center;
+    
+}
+.dugme_za_Broj_Diskova{
+    display: flex;
+    flex-direction: column;
+    height: 1cm;
+    width: 5cm;
+    justify-content: center;
+    align-items: center;
 }

@@ -305,6 +305,13 @@ prikazDiskovaTabelarno(host){
         tr.appendChild(th);
     })
 }
+prikazBrojDiskova(host,broj){
+    let prikazBroja=document.createElement("div");
+    prikazBroja.className="PrikazBroja";
+    prikazBroja.innerHTML=broj;
+    host.appendChild(prikazBroja);
+
+}
         prikaziClana(){
             var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
@@ -489,6 +496,7 @@ prikazDiskovaTabelarno(host){
             }).then(s=>{
                 if(s.ok){
                       alert("Član je uspešno pozajmio disk");
+                      this.prikaziPozajmljeneDiskove();
                 }
                 else alert("Dodeljivanje diska nije uspelo");
             })
@@ -595,12 +603,25 @@ prikazDiskovaTabelarno(host){
                     method:"GET"
                 }).then(s=>{
                     if(s.ok){
+                        
                         s.json().then(data=>{
-                              alert("Broj diskova sa ovim filmom je: "+data.broj_diskova);
+                            
+                             this.prikazBrojDiskova(this.kontejner,data.broj_diskova);
+                             let dugme = document.createElement("button");
+                             dugme.className="dugme_za_Broj_Diskova"
+                             dugme.innerHTML="Zatvori";
+                             dugme.onclick = (ev)=>{
+                             let a=document.querySelector(".PrikazBroja");
+                             this.kontejner.removeChild(a);
+                             this.kontejner.removeChild(dugme);
+                             }
+                             let a=document.querySelector(".GlavniKontejner");
+                             a.appendChild(dugme);
                             })
                     }
                     else alert("Greška");
                 })
+                
         }
 
 }
