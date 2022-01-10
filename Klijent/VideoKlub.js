@@ -5,15 +5,16 @@ import { Glumac } from "./Glumac.js";
 import { Reziser } from "./Reziser.js";
 
 export class VideoKlub{
-    constructor(){
-        this.listaClanova=[];
-        this.listaDiskova=[];
-        this.listaFilmova=[];
+    constructor(naziv){
+        this.naziv=naziv;
         this.kontejner=null;
     }
     crtajVideoKlub(host){
+        if(!host)
+            throw new Exception("Roditeljski element ne postoji");
         this.kontejner=document.createElement("div");
-        this.kontejner.className="GlavniKontejner";
+        this.kontejner.classList.add("GlavniKontejner");
+        this.kontejner.title=this.naziv;
         host.appendChild(this.kontejner);
         this.crtajformu(this.kontejner);
     }
@@ -34,6 +35,7 @@ export class VideoKlub{
         
         let tb= document.createElement("input");
         tb.className="unos_clanska_karta";
+        tb.type="number";
         kontForma.appendChild(tb);
 
         elLabela = document.createElement("label");
@@ -313,7 +315,7 @@ prikazBrojDiskova(host,broj){
 
 }
         prikaziClana(){
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
             alert("Nije unet broj članske karte");
                 this.prikazClanaTabelarno(this.kontejner);
@@ -322,7 +324,7 @@ prikazBrojDiskova(host,broj){
                 }).then(s=>{
                     if(s.ok){
                         s.json().then(data=>{
-                            var telotabele=document.querySelector(".PodacioClanu");
+                            var telotabele=this.kontejner.querySelector(".PodacioClanu");
                             
                                 let clan=new Clan(data.broj_clanske_karte,data.ime,data.prezime,data.datum_isteka_clanarine);
                                 clan.crtajClana(telotabele);
@@ -337,14 +339,14 @@ prikazBrojDiskova(host,broj){
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
-            let a=document.querySelector(".PrikazClana");
+            let a=this.kontejner.querySelector(".PrikazClana");
             this.kontejner.removeChild(a);
         }
-        let a=document.querySelector(".PrikazClana");
+        let a=this.kontejner.querySelector(".PrikazClana");
         a.appendChild(dugme);
         }
         prikaziFilm(){
-            var F=document.querySelector(".unos_filma_na_disku").value;
+            var F=this.kontejner.querySelector(".unos_filma_na_disku").value;
             if(F==null || F=="" || F==undefined)
             alert("Nije unet film koji je na disku");
                 this.prikazFilmaTabelarno(this.kontejner);
@@ -353,7 +355,7 @@ prikazBrojDiskova(host,broj){
                 }).then(s=>{
                     if(s.ok){
                         s.json().then(data=>{
-                            var telotabelefilma=document.querySelector(".PodacioFilmu");
+                            var telotabelefilma=this.kontejner.querySelector(".PodacioFilmu");
                                    data.forEach(s=>{
                                        let film=new Film(s.naslov,s.tip,s.rejting,s.godina,s.nominacija_za_nagrade,s.dobijene_nagrade);
                                     film.crtajFilm(telotabelefilma);
@@ -369,15 +371,15 @@ prikazBrojDiskova(host,broj){
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
-            let a=document.querySelector(".PrikazFilma");
+            let a=this.kontejner.querySelector(".PrikazFilma");
             this.kontejner.removeChild(a);
         }
-        let a=document.querySelector(".PrikazFilma");
+        let a=this.kontejner.querySelector(".PrikazFilma");
         a.appendChild(dugme);
         
         }
         prikaziRezisera(){
-            var Film=document.querySelector(".unos_filma_na_disku").value;
+            var Film=this.kontejner.querySelector(".unos_filma_na_disku").value;
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
                 this.prikazReziseraTabelarno(this.kontejner);
@@ -386,7 +388,7 @@ prikazBrojDiskova(host,broj){
                 }).then(s=>{
                     if(s.ok){
                         s.json().then(data=>{
-                            var telotabelerezisera=document.querySelector(".PodacioReziseru");
+                            var telotabelerezisera=this.kontejner.querySelector(".PodacioReziseru");
                                 data.forEach(s=>{
                                     let reziser=new Reziser(s.ime,s.prezime,s.datum_rodjenja,s.mesto_rodjenja);
                                     reziser.crtajRezisera(telotabelerezisera);
@@ -400,15 +402,15 @@ prikazBrojDiskova(host,broj){
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
-            let a=document.querySelector(".PrikazRezisera");
+            let a=this.kontejner.querySelector(".PrikazRezisera");
             this.kontejner.removeChild(a);
         }
-        let a=document.querySelector(".PrikazRezisera");
+        let a=this.kontejner.querySelector(".PrikazRezisera");
         a.appendChild(dugme);
         
         }
         prikaziGlumca(){
-            var Film=document.querySelector(".unos_filma_na_disku").value;
+            var Film=this.kontejner.querySelector(".unos_filma_na_disku").value;
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
                 this.prikazGlumcaTabelarno(this.kontejner);
@@ -417,7 +419,7 @@ prikazBrojDiskova(host,broj){
                 }).then(s=>{
                     if(s.ok){
                         s.json().then(data=>{
-                            var telotabeleglumca=document.querySelector(".PodacioGlumcu");
+                            var telotabeleglumca=this.kontejner.querySelector(".PodacioGlumcu");
                                 data.forEach(s=>{
                                     let glumac=new Glumac(s.ime,s.prezime,s.datum_rodjenja,s.mesto_rodjenja);
                                     glumac.crtajGlumca(telotabeleglumca);
@@ -431,15 +433,15 @@ prikazBrojDiskova(host,broj){
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
-            let a=document.querySelector(".PrikazGlumca");
+            let a=this.kontejner.querySelector(".PrikazGlumca");
             this.kontejner.removeChild(a);
         }
-        let a=document.querySelector(".PrikazGlumca");
+        let a=this.kontejner.querySelector(".PrikazGlumca");
         a.appendChild(dugme);
         
         }
         prikaziPozajmljeneDiskove(){
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
             alert("Nije unet broj članske karte");
                 this.prikazDiskovaTabelarno(this.kontejner);
@@ -449,7 +451,7 @@ prikazBrojDiskova(host,broj){
                     if(s.ok){
                         s.json().then(data=>{
                             
-                            var telotabelediska=document.querySelector(".PodacioDisku");
+                            var telotabelediska=this.kontejner.querySelector(".PodacioDisku");
                            data.forEach(s=>{
                             let disk=new Disk(s.film,s.datum_iznajmljivanja_diska,s.datum_vracanja_diska);
                            disk.crtajDisk(telotabelediska);
@@ -466,17 +468,17 @@ prikazBrojDiskova(host,broj){
             let dugme = document.createElement("button");
             dugme.innerHTML="Zatvori";
             dugme.onclick = (ev)=>{
-            let a=document.querySelector(".PrikazDiska");
+            let a=this.kontejner.querySelector(".PrikazDiska");
             this.kontejner.removeChild(a);
         }
-        let a=document.querySelector(".PrikazDiska");
+        let a=this.kontejner.querySelector(".PrikazDiska");
         a.appendChild(dugme);
         }
         pozajmiDisk(){
-            var Film=document.querySelector(".unos_filma_na_disku").value;
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
-            var Datum_iznajmljivanja_diska=document.querySelector(".unos_datuma_izdavanja_diska").value;
-            var Datum_vracanja_diska=document.querySelector(".unos_datuma_vracanja_diska").value;
+            var Film=this.kontejner.querySelector(".unos_filma_na_disku").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
+            var Datum_iznajmljivanja_diska=this.kontejner.querySelector(".unos_datuma_izdavanja_diska").value;
+            var Datum_vracanja_diska=this.kontejner.querySelector(".unos_datuma_vracanja_diska").value;
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
@@ -502,8 +504,8 @@ prikazBrojDiskova(host,broj){
             })
         }
         vratiDisk(){
-            var Film=document.querySelector(".unos_filma_na_disku").value;
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Film=this.kontejner.querySelector(".unos_filma_na_disku").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
@@ -524,10 +526,10 @@ prikazBrojDiskova(host,broj){
             })
         }
         dodajClana(){
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
-            var Ime=document.querySelector(".unos_ime").value;
-            var Prezime=document.querySelector(".unos_prezime").value;
-            var Datum_isteka_clanarine=document.querySelector(".unos_datuma_isteka_clanarine").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
+            var Ime=this.kontejner.querySelector(".unos_ime").value;
+            var Prezime=this.kontejner.querySelector(".unos_prezime").value;
+            var Datum_isteka_clanarine=this.kontejner.querySelector(".unos_datuma_isteka_clanarine").value;
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
             alert("Nije unet Broj članske karte");
             if(Ime==null || Ime=="" || Ime==undefined)
@@ -553,10 +555,10 @@ prikazBrojDiskova(host,broj){
             })
         }
         promeniClana(){
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
-            var Ime=document.querySelector(".unos_ime").value;
-            var Prezime=document.querySelector(".unos_prezime").value;
-            var Datum_isteka_clanarine=document.querySelector(".unos_datuma_isteka_clanarine").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
+            var Ime=this.kontejner.querySelector(".unos_ime").value;
+            var Prezime=this.kontejner.querySelector(".unos_prezime").value;
+            var Datum_isteka_clanarine=this.kontejner.querySelector(".unos_datuma_isteka_clanarine").value;
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
             alert("Nije unet broj članske karte");
             var clan=new Clan(Broj_clanske_karte,Ime,Prezime,Datum_isteka_clanarine);
@@ -577,7 +579,7 @@ prikazBrojDiskova(host,broj){
             })
         }
         izbrisiClana(){
-            var Broj_clanske_karte=document.querySelector(".unos_clanska_karta").value;
+            var Broj_clanske_karte=this.kontejner.querySelector(".unos_clanska_karta").value;
             if(Broj_clanske_karte==null || Broj_clanske_karte=="" || Broj_clanske_karte==undefined)
             alert("Nije unet broj članske karte");
             fetch("https://localhost:5001/Clan/IzbrisatiClana/"+Broj_clanske_karte,
@@ -596,7 +598,7 @@ prikazBrojDiskova(host,broj){
             })
         }
         brojDiskova(){
-            var Film=document.querySelector(".unos_filma_na_disku").value;
+            var Film=this.kontejner.querySelector(".unos_filma_na_disku").value;
             if(Film==null || Film=="" || Film==undefined)
             alert("Nije unet film koji je na disku");
             fetch("https://localhost:5001/Disk/PreuzmiBrojDiskova/"+Film,{
@@ -611,12 +613,11 @@ prikazBrojDiskova(host,broj){
                              dugme.className="dugme_za_Broj_Diskova"
                              dugme.innerHTML="Zatvori";
                              dugme.onclick = (ev)=>{
-                             let a=document.querySelector(".PrikazBroja");
+                             let a=this.kontejner.querySelector(".PrikazBroja");
                              this.kontejner.removeChild(a);
                              this.kontejner.removeChild(dugme);
                              }
-                             let a=document.querySelector(".GlavniKontejner");
-                             a.appendChild(dugme);
+                             this.kontejner.appendChild(dugme);
                             })
                     }
                     else alert("Greška");
