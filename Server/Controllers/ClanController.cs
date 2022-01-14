@@ -70,7 +70,11 @@ namespace Web_Projekat.Controllers
         [HttpPost]
         public async Task<ActionResult> DodatiClana([FromBody] Clanovi clan)
         {
-            
+            var c=Context.Clanovi.Where(p=>p.Broj_clanske_karte==clan.Broj_clanske_karte).FirstOrDefault();
+            if(c!=null)
+            {
+                return BadRequest("Već postoji član sa tim brojem članske karte");
+            }
             if(clan.Broj_clanske_karte<1 || clan.Broj_clanske_karte>2000)
             {
                 return BadRequest("Pogrešan broj clanske karte!");

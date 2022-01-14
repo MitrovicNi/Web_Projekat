@@ -13,9 +13,11 @@
 table,tr,th,td{
     
     border: 1px solid black;
+    font-size: 32px;
 }
 table{
     border-collapse: collapse;
+    width: 100%;
 }
  .PrikazBroja{
     display: flex;
